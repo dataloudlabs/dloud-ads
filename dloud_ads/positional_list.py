@@ -2,8 +2,6 @@ from .doubly_linked_base import _DoublyLinkedBase
 
 class PositionalList(_DoublyLinkedBase):
 	"""A sequential container of elements allowing positional access."""
-
-	#-------------------------- nested Position class --------------------------
 	class Position:
 		"""An abstraction representing the location of a single element.
 
@@ -28,27 +26,25 @@ class PositionalList(_DoublyLinkedBase):
 
 		def __ne__(self, other):
 			"""Return True if other does not represent the same location."""
-			return not (self == other)               # opposite of __eq__
-		
-	#------------------------------- utility methods -------------------------------
+			return not (self == other)
+
 	def _validate(self, p):
 		"""Return position's node, or raise appropriate error if invalid."""
 		if not isinstance(p, self.Position):
 			raise TypeError('p must be proper Position type')
 		if p._container is not self:
 			raise ValueError('p does not belong to this container')
-		if p._node._next is None:                  # convention for deprecated nodes
+		if p._node._next is None:
 			raise ValueError('p is no longer valid')
 		return p._node
 
 	def _make_position(self, node):
 		"""Return Position instance for given node (or None if sentinel)."""
 		if node is self._header or node is self._trailer:
-			return None                              # boundary violation
+			return None
 		else:
-			return self.Position(self, node)         # legitimate position
-		
-	#------------------------------- accessors -------------------------------
+			return self.Position(self, node)
+
 	def first(self):
 		"""Return the first Position in the list (or None if list is empty)."""
 		return self._make_position(self._header._next)
@@ -74,8 +70,6 @@ class PositionalList(_DoublyLinkedBase):
 			yield cursor.element()
 			cursor = self.after(cursor)
 
-	#------------------------------- mutators -------------------------------
-	# override inherited version to return Position, rather than Node
 	def _insert_between(self, e, predecessor, successor):
 		"""Add element between existing nodes and return new Position."""
 		node = super()._insert_between(e, predecessor, successor)
@@ -102,7 +96,7 @@ class PositionalList(_DoublyLinkedBase):
 	def delete(self, p):
 		"""Remove and return the element at Position p."""
 		original = self._validate(p)
-		return self._delete_node(original)  # inherited method returns element
+		return self._delete_node(original)
 
 	def replace(self, p, e):
 		"""Replace the element at Position p with e.
@@ -110,6 +104,6 @@ class PositionalList(_DoublyLinkedBase):
 		Return the element formerly at Position p.
 		"""
 		original = self._validate(p)
-		old_value = original._element       # temporarily store old element
-		original._element = e               # replace with new element
-		return old_value                    # return the old element value
+		old_value = original._element
+		original._element = e
+		return old_value

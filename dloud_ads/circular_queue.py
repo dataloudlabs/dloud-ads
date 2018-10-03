@@ -4,7 +4,7 @@ class CircularQueue:
 
 	class _Node:
 		"""Lightweight, nonpublic class for storing a singly linked node."""
-		__slots__ = '_element', '_next'         # streamline memory usage
+		__slots__ = '_element', '_next'
 
 		def __init__(self, element, next):
 			self._element = element
@@ -13,8 +13,8 @@ class CircularQueue:
 
 	def __init__(self):
 		"""Create an empty queue."""
-		self._tail = None                     # will represent tail of queue
-		self._size = 0                        # number of queue elements
+		self._tail = None
+		self._size = 0
 
 	def __len__(self):
 		"""Return the number of elements in the queue."""
@@ -42,25 +42,25 @@ class CircularQueue:
 		if self.is_empty():
 			raise ValueError('Queue is empty')
 		oldhead = self._tail._next
-		if self._size == 1:                   # removing only element
-			self._tail = None                   # queue becomes empty
+		if self._size == 1:
+			self._tail = None
 		else:
-			self._tail._next = oldhead._next    # bypass the old head
+			self._tail._next = oldhead._next
 		self._size -= 1
 		return oldhead._element
 
 	def enqueue(self, e):
 		"""Add an element to the back of queue."""
-		newest = self._Node(e, None)          # node will be new tail node
+		newest = self._Node(e, None)
 		if self.is_empty():
-			newest._next = newest               # initialize circularly
+			newest._next = newest
 		else:
-			newest._next = self._tail._next     # new node points to head
-			self._tail._next = newest           # old tail points to new node
-		self._tail = newest                   # new node becomes the tail
+			newest._next = self._tail._next
+			self._tail._next = newest
+		self._tail = newest
 		self._size += 1
 
 	def rotate(self):
 		"""Rotate front element to the back of the queue."""
 		if self._size > 0:
-			self._tail = self._tail._next       # old head becomes new tail
+			self._tail = self._tail._next

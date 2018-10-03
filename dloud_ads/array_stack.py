@@ -5,7 +5,7 @@ class ArrayStack:
 
 	def __init__(self):
 		"""Create an empty stack."""
-		self._data = []                       # nonpublic list instance
+		self._data = []
 
 	def __len__(self):
 		"""Return the number of elements in the stack."""
@@ -17,7 +17,7 @@ class ArrayStack:
 
 	def push(self, e):
 		"""Add element e to the top of the stack."""
-		self._data.append(e)                  # new item stored at end of list
+		self._data.append(e)
 
 	def top(self):
 		"""Return (but do not remove) the element at the top of the stack.
@@ -26,7 +26,7 @@ class ArrayStack:
 		"""
 		if self.is_empty():
 			raise ValueError('Stack is empty')
-		return self._data[-1]                 # the last item in the list
+		return self._data[-1]
 
 	def pop(self):
 		"""Remove and return the element from the top of the stack (i.e., LIFO).
@@ -35,5 +35,5 @@ class ArrayStack:
 		"""
 		if self.is_empty():
 			raise ValueError('Stack is empty')
-		return self._data.pop()               # remove last item from list
+		return self._data.pop()
 
