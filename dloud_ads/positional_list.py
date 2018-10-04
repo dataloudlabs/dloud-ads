@@ -72,7 +72,7 @@ class PositionalList(_DoublyLinkedBase):
 
 	def _insert_between(self, e, predecessor, successor):
 		"""Add element between existing nodes and return new Position."""
-		node = super()._insert_between(e, predecessor, successor)
+		node = _DoublyLinkedBase._insert_between(self, e, predecessor, successor)
 		return self._make_position(node)
 
 	def add_first(self, e):
