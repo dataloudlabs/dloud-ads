@@ -1,28 +1,32 @@
+""" Unit tests for array_queue.ArrayQueue """
+
 from dloud_ads import array_queue
 
 def test_dummy():
-	Q = array_queue.ArrayQueue()
-	
-	assert Q.is_empty() == True
-	assert len(Q) == 0
+    """Test definition"""
 
-	Q.enqueue(2)
-	assert Q.is_empty() == False
-	assert len(Q) == 1
-	assert Q.dequeue() == 2
+    the_queue = array_queue.ArrayQueue()
 
-	_ = [Q.enqueue(x) for x in range(4)]
-	assert len(Q) == 4
-	assert [Q.dequeue() for x in range(4)] == [0,1,2,3]
-	assert len(Q) == 0
+    assert the_queue.is_empty()
+    assert not the_queue
 
-	_ = [Q.enqueue(x) for x in range(9)]
-	assert len(Q) == 9
-	assert len(Q._data) == 10
+    the_queue.enqueue(2)
+    assert not the_queue.is_empty()
+    assert len(the_queue) == 1
+    assert the_queue.dequeue() == 2
 
-	_ = [Q.enqueue(x) for x in range(2)]
-	assert len(Q) == 11
-	assert len(Q._data) == 20
+    _ = [the_queue.enqueue(x) for x in range(4)]
+    assert len(the_queue) == 4
+    assert [the_queue.dequeue() for x in range(4)] == [0, 1, 2, 3]
+    assert not the_queue
 
-	assert [Q.dequeue() for x in range(11)] == [0,1,2,3,4,5,6,7,8,0,1]
+    _ = [the_queue.enqueue(x) for x in range(9)]
+    assert len(the_queue) == 9
+    assert len(the_queue._data) == 10
 
+    _ = [the_queue.enqueue(x) for x in range(2)]
+    assert len(the_queue) == 11
+    assert len(the_queue._data) == 20
+
+    expected = [0, 1, 2, 3, 4, 5, 6, 7, 8, 0, 1]
+    assert [the_queue.dequeue() for x in range(11)] == expected
