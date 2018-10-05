@@ -1,56 +1,58 @@
+"""Abstract base class representing a binary tree structure."""
+
 from .tree import Tree
 
 class BinaryTree(Tree):
-	"""Abstract base class representing a binary tree structure."""
+    """Abstract base class representing a binary tree structure."""
 
-	def left(self, p):
-		"""Return a Position representing p's left child.
+    def left(self, pos):
+        """Return a Position representing p's left child.
 
-		Return None if p does not have a left child.
-		"""
-		raise NotImplementedError('must be implemented by subclass')
+        Return None if p does not have a left child.
+        """
+        raise NotImplementedError('must be implemented by subclass')
 
-	def right(self, p):
-		"""Return a Position representing p's right child.
+    def right(self, pos):
+        """Return a Position representing p's right child.
 
-		Return None if p does not have a right child.
-		"""
-		raise NotImplementedError('must be implemented by subclass')
+        Return None if p does not have a right child.
+        """
+        raise NotImplementedError('must be implemented by subclass')
 
-	def sibling(self, p):
-		"""Return a Position representing p's sibling (or None if no sibling)."""
-		parent = self.parent(p)
-		if parent is None:
-			return None
-		else:
-			if p == self.left(parent):
-				return self.right(parent)
-			else:
-				return self.left(parent)
+    def sibling(self, pos):
+        """Return a Position representing p's sibling (or None if no sibling)."""
+        parent = self.parent(pos)
+        if parent is None:
+            return None
 
-	def children(self, p):
-		"""Generate an iteration of Positions representing p's children."""
-		if self.left(p) is not None:
-			yield self.left(p)
-		if self.right(p) is not None:
-			yield self.right(p)
+        if pos == self.left(parent):
+            return self.right(parent)
 
-	def inorder(self):
-		"""Generate an inorder iteration of positions in the tree."""
-		if not self.is_empty():
-			for p in self._subtree_inorder(self.root()):
-				yield p
+        return self.left(parent)
 
-	def _subtree_inorder(self, p):
-		"""Generate an inorder iteration of positions in subtree rooted at p."""
-		if self.left(p) is not None:
-			for other in self._subtree_inorder(self.left(p)):
-				yield other
-		yield p
-		if self.right(p) is not None:
-			for other in self._subtree_inorder(self.right(p)):
-				yield other
+    def children(self, pos):
+        """Generate an iteration of Positions representing p's children."""
+        if self.left(pos) is not None:
+            yield self.left(pos)
+        if self.right(pos) is not None:
+            yield self.right(pos)
 
-	def positions(self):
-		"""Generate an iteration of the tree's positions."""
-		return self.inorder()
+    def inorder(self):
+        """Generate an inorder iteration of positions in the tree."""
+        if not self.is_empty():
+            for pos in self._subtree_inorder(self.root()):
+                yield pos
+
+    def _subtree_inorder(self, pos):
+        """Generate an inorder iteration of positions in subtree rooted at p."""
+        if self.left(pos) is not None:
+            for other in self._subtree_inorder(self.left(pos)):
+                yield other
+        yield pos
+        if self.right(pos) is not None:
+            for other in self._subtree_inorder(self.right(pos)):
+                yield other
+
+    def positions(self):
+        """Generate an iteration of the tree's positions."""
+        return self.inorder()
